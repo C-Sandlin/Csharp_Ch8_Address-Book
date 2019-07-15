@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBook
 {
-    class Program
+    public class Program
     {
         /*
             1. Add the required classes to make the following code compile.
@@ -24,6 +25,7 @@ namespace AddressBook
                 Email = "bob.smith@email.com",
                 Address = "100 Some Ln, Testville, TN 11111"
             };
+
             Contact sue = new Contact()
             {
                 FirstName = "Sue",
@@ -31,6 +33,7 @@ namespace AddressBook
                 Email = "sue.jones@email.com",
                 Address = "322 Hard Way, Testville, TN 11111"
             };
+
             Contact juan = new Contact()
             {
                 FirstName = "Juan",
@@ -47,29 +50,65 @@ namespace AddressBook
             addressBook.AddContact(juan);
 
             // Try to addd a contact a second time
-            addressBook.AddContact(sue);
+            // try
+            // {
+            //     addressBook.AddContact(sue);
+            // }
+            // catch (ArgumentException ex)
+            // {
+            //     Console.WriteLine($"ERROR: Could not add contact a second time.{ex}");
+            // }
 
 
             // Create a list of emails that match our Contacts
             List<string> emails = new List<string>() {
-            "sue.jones@email.com",
-            "juan.lopez@email.com",
-            "bob.smith@email.com",
-        };
+                "sue.jones@email.com",
+                "juan.lopez@email.com",
+                "bob.smith@email.com",
+            };
+
+            foreach (String email in emails)
+            {
+                Console.WriteLine($"{email}");
+            }
 
             // Insert an email that does NOT match a Contact
-            emails.Insert(1, "not.in.addressbook@email.com");
+            try
+            {
+                emails.Insert(1, "not.in.addressbook@email.com");
+                Console.WriteLine("Success");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"ERROR: Unable to insert new email.{ex}");
+            }
 
-
-            //  Search the AddressBook by email and print the information about each Contact
             foreach (string email in emails)
             {
-                Contact contact = addressBook.GetByEmail(email);
-                Console.WriteLine("----------------------------");
-                Console.WriteLine($"Name: {contact.FullName}");
-                Console.WriteLine($"Email: {contact.Email}");
-                Console.WriteLine($"Address: {contact.Address}");
+                try
+                {
+                    Contact contact = addressBook.GetByEmail(email);
+                    Console.WriteLine("----------------------------");
+                    Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
+                    Console.WriteLine($"Email: {contact.Email}");
+                    Console.WriteLine($"Address: {contact.Address}");
+                }
+                catch
+                {
+                    Console.WriteLine($"Unable to find contact data matching {email}");
+                }
             }
+
+
+            // //  Search the AddressBook by email and print the information about each Contact
+            // foreach (string email in emails)
+            // {
+            //     Contact contact = addressBook.GetByEmail(email);
+            //     Console.WriteLine("----------------------------");
+            //     Console.WriteLine($"Name: {contact.FullName}");
+            //     Console.WriteLine($"Email: {contact.Email}");
+            //     Console.WriteLine($"Address: {contact.Address}");
+            // }
         }
     }
 }
